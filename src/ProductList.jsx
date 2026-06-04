@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
+import { addItem, removeItem, updateQuantity } from './CartSlice';
+
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({}); // State that tracks which products were added to cart
-    
+
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -254,9 +256,10 @@ function ProductList({ onHomeClick }) {
         setShowCart(false);
     };
 
-    const handleAddToCart = (e) => {
-        e.preventDefault();
-        setShowCart(false);
+    const handleAddToCart = (item) => {
+        dispatchEvent(addItem(item));
+
+        setAddedToCart((prevState) => ({...prevState, [item.name]: true}));
 
     }
 
