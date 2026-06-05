@@ -8,13 +8,15 @@ export const CartSlice = createSlice({
   reducers: {
     addItem: (state, action) => {
       const {name, image, cost } = action.payload;
+      console.log("in CartSlice");
+      console.log(`CartSlice added ${name}`);
 
       const itemInCart = state.items.find(item => item.name === name);
       if (itemInCart){
         itemInCart.quantity++;
       }
       else{
-        items.push({name: state, quantity: 1});
+        state.items.push({name, image, cost, quantity: 1});
       }
 
     },
@@ -29,9 +31,7 @@ export const CartSlice = createSlice({
       const itemQtyUpdate = state.items.find(item => item.name === name);
       if (itemQtyUpdate) {
         itemQtyUpdate.quantity = quantity;
-      }
-
-    
+      } 
     },
   },
 });
